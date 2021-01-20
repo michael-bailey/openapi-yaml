@@ -1,19 +1,19 @@
-export default class Aeroport {
-  icao: string = "";
-  iata: string = "";
-  name: string = "";
-  city: string = "";
-  state: string = "";
-  country: string = "";
-  elevation: number = 0;
-  lat: number = 0;
-  lon: number = 0;
-  tz: string = "";
+module.exports = class Aeroport {
+  constructor() {
+    this.icao = "";
+    this.iata = "";
+    this.name = "";
+    this.city = "";
+    this.state = "";
+    this.country = "";
+    this.elevation = 0;
+    this.lat = 0;
+    this.lon = 0;
+    this.tz = "";
+  }
 
-  static newObject(object: Aeroport): Aeroport {
+  static newObject(object) {
     let tmp = new Aeroport();
-
-    console.log(tmp);
 
     tmp.city = object.city ?? "";
     tmp.country = object.country ?? "";
@@ -28,4 +28,4 @@ export default class Aeroport {
 
     return tmp;
   }
-}
+};

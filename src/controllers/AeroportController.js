@@ -1,23 +1,28 @@
-import { Request, Router, Response } from "express";
+const { Router } = require("express");
+const fs = require("fs");
+const path = require("path");
 
-import Aeroport from "../models/Aeroport";
+const Aeroport = "../models/Aeroport.js";
 
-import _aeroports from "../data/aeroports.json";
-let aeroports = _aeroports as Array<Aeroport>;
+const aeroports = JSON.parse(
+  fs
+    .readFileSync(path.join(path.resolve(), "/src/data/aeroports.json"))
+    .toString()
+);
 
 let route = Router();
 
 route
   .route("/aeroports")
-  .get(async (req: Request, res: Response) => {
+  .get(async (req, res) => {
     // query params: limit, page, sort
-    let limit: number = isNaN(parseInt(req.query["limit"] as string))
+    let limit = isNaN(parseInt(req.query["limit"]))
       ? 10
-      : parseInt(req.query["limit"] as string);
-    let page: number = isNaN(parseInt(req.query["page"] as string))
+      : parseInt(req.query["limit"]);
+    let page = isNaN(parseInt(req.query["page"]))
       ? 0
-      : parseInt(req.query["page"] as string);
-    let sort: string = (req.query["sort"] as string) ?? "";
+      : parseInt(req.query["page"]);
+    let sort = req.query["sort"] ?? "";
 
     // pagination
     let tmp = aeroports.slice(limit * page, limit + limit * page);
@@ -52,7 +57,7 @@ route
       .send(JSON.stringify({ count: tmp.length, result: tmp }))
       .end();
   })
-  .post(async (req: Request, res: Response) => {
+  .post(async (req, res) => {
     // create new aeroplane
     let tmp = Aeroport.newObject(req.body);
 
@@ -65,8 +70,8 @@ route
 
 route
   .route("/aeroports/:icao")
-  .get(async (req: Request, res: Response) => {})
-  .patch(async (req: Request, res: Response) => {})
-  .delete(async (req: Request, res: Response) => {});
+  .get(async (req, res) => {})
+  .patch(async (req, res) => {})
+  .delete(async (req, res) => {});
 
-export default route;
+module.exports = route;
