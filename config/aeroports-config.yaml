@@ -1,166 +1,166 @@
-# openapi: 3.0.0
-# info:
-#   title: Aeroports
-#   version: 0.0.1
-#   description: This is a api for accessing aeroport data and related aeroplane data
-#   license:
-#     name: MIT
+openapi: 3.0.0
+info:
+  title: Aeroports
+  version: 0.0.1
+  description: This is a api for accessing aeroport data and related aeroplane data
+  license:
+    name: MIT
 
-# paths:
-#   /v1/aeroports:
-#     get:
-#       description: get all aeroports
-#       parameters:
-#         - name: limit
-#           in: query
-#           schema:
-#             type: integer
-#             maximum: 100
-#             minimum: 1
-#         - name: page
-#           in: query
-#           schema:
-#             type: integer
-#         - name: sort
-#           in: query
-#           schema:
-#             type: string
-#             enum:
-#               - "lat"
-#               - "lon"
-#               - "country"
-#       responses:
-#         "200":
-#           $ref: "#/components/responses/Aeroports"
-#         "418":
-#           description: i am a teapot.
+paths:
+  /v1/aeroports:
+    get:
+      description: get all aeroports
+      parameters:
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            maximum: 100
+            minimum: 1
+        - name: page
+          in: query
+          schema:
+            type: integer
+        - name: sort
+          in: query
+          schema:
+            type: string
+            enum:
+              - "lat"
+              - "lon"
+              - "country"
+      responses:
+        "200":
+          $ref: "#/components/responses/Aeroports"
+        "418":
+          description: i am a teapot.
 
-#     post:
-#       description: add a new aeroport
-#       responses:
-#         "201":
-#           $ref: "#/components/responses/Aeroport"
+    post:
+      description: add a new aeroport
+      responses:
+        "201":
+          $ref: "#/components/responses/Aeroport"
 
-#   /v1/aeroports/{icao}:
-#     get:
-#       description: get aeroport from id
-#       parameters:
-#         - name: "icao"
-#           in: path
-#           description: the id of the aeroport
-#           required: true
-#           schema:
-#             type: string
-#       responses:
-#         "200":
-#           $ref: "#/components/responses/Aeroport"
-#         "404":
-#           description: resource not found
+  /v1/aeroports/{icao}:
+    get:
+      description: get aeroport from id
+      parameters:
+        - name: "icao"
+          in: path
+          description: the id of the aeroport
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          $ref: "#/components/responses/Aeroport"
+        "404":
+          description: resource not found
 
-#     patch:
-#       description: path a aeroplane
-#       parameters:
-#         - name: "icao"
-#           in: path
-#           description: the id of the aeroport
-#           required: true
-#           schema:
-#             type: string
-#       responses:
-#         "202":
-#           description: request accepted and will be acted upon at some point
-#         "404":
-#           description: resource not found
+    patch:
+      description: path a aeroplane
+      parameters:
+        - name: "icao"
+          in: path
+          description: the id of the aeroport
+          required: true
+          schema:
+            type: string
+      responses:
+        "202":
+          description: request accepted and will be acted upon at some point
+        "404":
+          description: resource not found
 
-#     delete:
-#       description: remove an aeroport
-#       parameters:
-#         - name: "icao"
-#           in: path
-#           description: the id of the aeroport
-#           required: true
-#           schema:
-#             type: string
-#       responses:
-#         "202":
-#           description: request accepted item will be acted upon at some point
-#         "404":
-#           description: resource not found
+    delete:
+      description: remove an aeroport
+      parameters:
+        - name: "icao"
+          in: path
+          description: the id of the aeroport
+          required: true
+          schema:
+            type: string
+      responses:
+        "202":
+          description: request accepted item will be acted upon at some point
+        "404":
+          description: resource not found
 
-# components:
-#   schemas:
-#     Aeroport:
-#       type: object
-#       properties:
-#         icao:
-#           type: string
-#         iata:
-#           type: string
-#         name:
-#           type: string
-#         city:
-#           type: string
-#         state:
-#           type: string
-#         country:
-#           type: string
-#         elevation:
-#           type: integer
-#         lat:
-#           type: number
-#         lon:
-#           type: number
-#         tz:
-#           type: string
-#         aeroplanes:
-#           type: array
-#           items:
-#             $ref: "#/components/schemas/Aeroplane"
+components:
+  schemas:
+    Aeroport:
+      type: object
+      properties:
+        icao:
+          type: string
+        iata:
+          type: string
+        name:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        country:
+          type: string
+        elevation:
+          type: integer
+        lat:
+          type: number
+        lon:
+          type: number
+        tz:
+          type: string
+        aeroplanes:
+          type: array
+          items:
+            $ref: "#/components/schemas/Aeroplane"
 
-#     Aeroplane:
-#       type: object
-#       properties:
-#         name:
-#           type: string
+    Aeroplane:
+      type: object
+      properties:
+        name:
+          type: string
 
-#     Teapot:
-#       type: object
-#       properties:
-#         temp:
-#           type: number
-#         capacity:
-#           type: number
-#       additionalProperties: true
+    Teapot:
+      type: object
+      properties:
+        temp:
+          type: number
+        capacity:
+          type: number
+      additionalProperties: true
 
-#   responses:
-#     Aeroports:
-#       description: list of aeroports found
-#       content:
-#         application/json:
-#           schema:
-#             type: object
-#             properties:
-#               count:
-#                 type: integer
-#                 format: int64
-#               result:
-#                 type: array
-#                 items:
-#                   $ref: "#/components/schemas/Aeroport"
+  responses:
+    Aeroports:
+      description: list of aeroports found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              count:
+                type: integer
+                format: int64
+              result:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Aeroport"
 
-#     Aeroport:
-#       description: single aeroport
-#       content:
-#         application/json:
-#           schema:
-#             type: object
-#             properties:
-#               result:
-#                 $ref: "#/components/schemas/Aeroport"
+    Aeroport:
+      description: single aeroport
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              result:
+                $ref: "#/components/schemas/Aeroport"
 
-#     Teapot:
-#       description: in compliance with RFC 2324 i have implemented the coffee protocol
-#       content:
-#         application/json:
-#           schema:
-#             $ref: "#/components/schemas/Teapot"
+    Teapot:
+      description: in compliance with RFC 2324 i have implemented the coffee protocol
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Teapot"
